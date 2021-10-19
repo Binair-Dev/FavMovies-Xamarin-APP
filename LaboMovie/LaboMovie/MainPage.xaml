@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LaboMovie.MainPage">
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame  BackgroundColor="DarkCyan">
+                <Label Text="Mes films" HorizontalOptions="Center"  FontSize="22" FontAttributes="Bold" TextColor="White" Margin="0,0,0,25"/>
+            </Frame>
+            <ScrollView HeightRequest="700">
+                <ListView ItemsSource="{Binding MovieList}" SelectedItem="{Binding SelectedMovie}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="________________________" HorizontalOptions="Center"  FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                                    <Image Source="{Binding PosterUrl}" WidthRequest="75" HeightRequest="200"/>
+                                    <Label HorizontalOptions="Center"  FontSize="22" FontAttributes="Bold" TextColor="Gray">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Name}"/>
+                                                <Span Text=" | ("/>
+                                                <Span Text="{Binding ReleaseYear}" />
+                                                <Span Text=")"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

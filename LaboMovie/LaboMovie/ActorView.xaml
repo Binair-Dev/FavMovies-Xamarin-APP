@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LaboMovie.ActorView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Command="{Binding CloseCommand}" Text="Fermer" Margin="0,0,0,15"/>
+            <Label HorizontalOptions="Center"  FontSize="22" FontAttributes="Bold" TextColor="White">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding ActorDetails.person.FirstName}"/>
+                        <Span Text=" "/>
+                        <Span Text="{Binding ActorDetails.person.LastName}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Image Source="{Binding ActorDetails.person.PictureUrl}" WidthRequest="75" HeightRequest="200" Margin="0,10,0,15"/>
+            <Label Text="10 derniers films (joués)" TextColor="White" TextDecorations="Underline" FontSize="18" HorizontalTextAlignment="Center"/>
+            <ListView ItemsSource="{Binding ActorDetails.playedMovies}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Title}" HorizontalOptions="Center" TextColor="Gray" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+                <Label Text="10 derniers films (réalisé)" TextColor="White" TextDecorations="Underline" FontSize="18" HorizontalTextAlignment="Center"/>
+            <ListView ItemsSource="{Binding ActorDetails.realisedMovies}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Title}" HorizontalOptions="Center" TextColor="Gray" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Label Text="10 derniers films (scénarisé)" TextColor="White" TextDecorations="Underline" FontSize="18" HorizontalTextAlignment="Center"/>
+            <ListView ItemsSource="{Binding ActorDetails.scenarisedMovies}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Title}" HorizontalOptions="Center" TextColor="Gray" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
