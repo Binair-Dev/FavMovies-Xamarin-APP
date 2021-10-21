@@ -6,8 +6,25 @@
     <ContentPage.Content>
         <StackLayout>
             <Frame  BackgroundColor="DarkCyan">
-                <Label Text="Mes films" HorizontalOptions="Center"  FontSize="22" FontAttributes="Bold" TextColor="White" Margin="0,0,0,25"/>
+                <Label Text="Mes films" HorizontalOptions="Center"  FontSize="22" FontAttributes="Bold" TextColor="White"/>
             </Frame>
+            <Label Text="Catégories" TextColor="White" FontSize="18" HorizontalTextAlignment="Center"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <ListView ItemsSource="{Binding CategoryList}" SelectedItem="{Binding CategoryMovie}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding Nom}" HorizontalOptions="Center" TextColor="Gray" BackgroundColor="Transparent"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
             <ScrollView HeightRequest="700">
                 <ListView ItemsSource="{Binding MovieList}" SelectedItem="{Binding SelectedMovie}">
                     <ListView.ItemTemplate>
