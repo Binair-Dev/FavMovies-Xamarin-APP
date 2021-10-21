@@ -12,6 +12,7 @@ namespace LaboMovie.ViewModels
     public class MovieViewModel : ViewModelBase
     {
         public ObservableCollection<Movie> MovieList { get; set; }
+        public ObservableCollection<Category> CategoryList { get; set; }
 
         private Movie _selectedMovie;
 
@@ -26,22 +27,81 @@ namespace LaboMovie.ViewModels
             }
         }
 
-        public MovieViewModel()
-        {
+        private Category _selectedCategory;
 
-            MovieList = new ObservableCollection<Movie>();
-            LoadItems("http://localhost:41798/api/Movie");
+        public Category CategoryMovie
+        {
+            get { return _selectedCategory; }
+            set
+            {
+                SetValue(ref _selectedCategory, value);
+                if (!(_selectedCategory is null))
+                {
+                    if(_selectedCategory.Id != 0)
+                        App.Current.MainPage.Navigation.PushModalAsync(new MainPage(_selectedCategory));
+                    else
+                        App.Current.MainPage.Navigation.PushModalAsync(new MainPage(null));
+                }
+            }
         }
 
-        private async void LoadItems(string url)
+        public MovieViewModel(Category cat = null)
+        {
+            if(cat == null)
+            {
+                MovieList = new ObservableCollection<Movie>();
+                CategoryList = new ObservableCollection<Category>();
+                LoadItems();
+            }
+            else
+            {
+                MovieList = new ObservableCollection<Movie>();
+                CategoryList = new ObservableCollection<Category>();
+                LoadItems(cat);
+            }
+        }
+
+        private async void LoadItems()
         {
             MovieList.Clear();
 
-            IEnumerable<Movie> req = await DependencyService.Get<MovieService>().GetAll(url);
+            IEnumerable<Movie> req = await DependencyService.Get<MovieService>().GetAll("http://localhost:41798/api/Movie");
+            IEnumerable<Category> cats = await DependencyService.Get<CategoryService>().GetAll("http://localhost:41798/api/Category");
 
             foreach (Movie item in req)
             {
                 MovieList.Add(item);
+            }
+            CategoryList.Add(new Category() 
+            {
+                Id = 0, Nom = "Tout"
+            });
+            foreach (Category item in cats)
+            {
+                CategoryList.Add(item);
+            }
+        }
+
+        private async void LoadItems(Category cat)
+        {
+            MovieList.Clear();
+
+            IEnumerable<Movie> req = await DependencyService.Get<MovieService>().GetAll("http://localhost:41798/api/Movie");
+            IEnumerable<Category> cats = await DependencyService.Get<CategoryService>().GetAll("http://localhost:41798/api/Category");
+
+            foreach (Movie item in req)
+            {
+                if(cat.Id == item.Id)
+                    MovieList.Add(item);
+            }
+            CategoryList.Add(new Category()
+            {
+                Id = 0,
+                Nom = "Tout"
+            });
+            foreach (Category item in cats)
+            {
+                CategoryList.Add(item);
             }
         }
 
